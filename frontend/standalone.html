@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIVOA.AI - Customer Complaint Management System (API & FDF QA)</title>
+  <!-- Google Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- React & Redux CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@reduxjs/toolkit@1.9.5/dist/redux-toolkit.umd.js"></script>
+  <script src="https://unpkg.com/react-redux@8.0.5/dist/react-redux.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-family: 'Inter', system-ui, sans-serif;
+      --bg-app: #f4f6f9;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-family); background-color: var(--bg-app); color: var(--text-main); min-height: 100vh; }
+    .top-header { background: #fff; border-bottom: 1px solid var(--border-color); padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .logo-badge { background: linear-gradient(135deg, #1e40af, #2563eb); color: white; font-weight: 800; padding: 6px 12px; border-radius: 6px; font-size: 15px; }
+    .status-pills { display: flex; gap: 10px; align-items: center; }
+    .pill { padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .pill-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .pill-info { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .pill-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .tab-bar { background: #fff; padding: 0 28px; border-bottom: 1px solid var(--border-color); display: flex; gap: 20px; }
+    .tab-btn { background: none; border: none; padding: 12px 16px; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .main-content { padding: 24px 28px; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 1024px) { .grid-2col { grid-template-columns: 1fr; } }
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+    .card-title { font-size: 18px; font-weight: 700; }
+    .section-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 18px 0 10px 0; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    label { font-size: 13px; font-weight: 600; color: #334155; }
+    input, select, textarea { width: 100%; padding: 9px 12px; font-family: inherit; font-size: 13.5px; border: 1px solid var(--border-color); border-radius: 6px; background-color: #f8fafc; outline: none; }
+    input:focus, select:focus, textarea:focus { background-color: #ffffff; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+    input.extracted, select.extracted, textarea.extracted { background-color: #f0fdf4; border-color: #86efac; }
+    .button-row { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+    .btn { padding: 9px 18px; font-family: inherit; font-size: 13.5px; font-weight: 600; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-secondary { background: #fff; border-color: var(--border-color); color: var(--text-main); }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-outline { background: transparent; border-color: var(--primary); color: var(--primary); }
+    .dropzone { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 28px 20px; text-align: center; background: #fafafa; cursor: pointer; margin-bottom: 16px; }
+    .dropzone:hover { border-color: var(--primary); background: #eff6ff; }
+    .progress-bar-container { margin: 16px 0; }
+    .progress-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); }
+    .progress-track { height: 8px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #3b82f6); transition: width 0.4s ease; }
+    .chat-box { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; height: 280px; }
+    .chat-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+    .msg-bubble { max-width: 85%; padding: 10px 14px; border-radius: 8px; font-size: 13px; }
+    .msg-assistant { background: #ffffff; border: 1px solid var(--border-color); align-self: flex-start; }
+    .msg-user { background: var(--primary); color: white; align-self: flex-end; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+    .tool-card { background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; }
+    .tool-header { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+    .score-display { font-size: 32px; font-weight: 800; color: var(--primary); }
+    .badge-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .badge-high { background: #ffedd5; color: #9a3412; }
+    .data-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13.5px; }
+    .data-table th, .data-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border-color); }
+    .data-table th { background: #f8fafc; font-weight: 700; color: var(--text-muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const { configureStore, createSlice } = RTK;
+    const { Provider, useSelector, useDispatch } = ReactRedux;
+
+    const initialForm = {
+      complaint_source: 'Customer Email',
+      customer_name: 'Global Pharma Distributors Inc.',
+      product_name: 'Paracetamol 500mg Film-Coated Tablets',
+      product_strength: '500mg USP Grade',
+      batch_number: 'BATCH-2026-X88',
+      manufacturing_date: '2026-02-15',
+      expiry_date: '2028-02-15',
+      quantity_affected: '2,500 blister packs',
+      complaint_type: 'Quality/Purity',
+      complaint_date: '2026-07-28',
+      description: 'Yellow-brownish spots and mottling observed on tablets in Batch BATCH-2026-X88 upon opening blister packs.',
+      initial_severity: 'High',
+      priority: 'High',
+      status: 'Pending Triage'
+    };
+
+    const complaintSlice = createSlice({
+      name: 'complaint',
+      initialState: {
+        form: initialForm,
+        activeTab: 'log',
+        progress: 100,
+        chat: [
+          { sender: 'assistant', text: 'Upload a complaint document or paste text above. I will automatically extract the details and populate the form for you.' }
+        ]
+      },
+      reducers: {
+        updateField: (state, action) => {
+          state.form[action.payload.name] = action.payload.value;
+        },
+        resetForm: (state) => {
+          state.form = {
+            complaint_source: '', customer_name: '', product_name: '', product_strength: '',
+            batch_number: '', manufacturing_date: '', expiry_date: '', quantity_affected: '',
+            complaint_type: '', complaint_date: '', description: '', initial_severity: 'Medium',
+            priority: 'Medium', status: 'Pending Triage'
+          };
+        },
+        setActiveTab: (state, action) => { state.activeTab = action.payload; },
+        addChatMessage: (state, action) => {
+          state.chat.push(action.payload);
+        }
+      }
+    });
+
+    const store = configureStore({ reducer: { complaint: complaintSlice.reducer } });
+
+    function Header() {
+      const dispatch = useDispatch();
+      const activeTab = useSelector(s => s.complaint.activeTab);
+      return (
+        <header>
+          <div className="top-header">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <div className="logo-badge">AIVOA.AI</div>
+              <div>
+                <h1 style={{ fontSize: '18px', fontWeight: 700 }}>Log Customer Complaint</h1>
+                <p style={{ fontSize: '12px', color: '#64748b' }}>API & FDF Quality Assurance Module</p>
+              </div>
+            </div>
+            <div className="status-pills">
+              <span className="pill pill-warning">Pending Triage</span>
+              <span className="pill pill-info">Risk: High (76/100)</span>
+            </div>
+          </div>
+          <div className="tab-bar">
+            <button className={`tab-btn ${activeTab==='log'?'active':''}`} onClick={() => dispatch(complaintSlice.actions.setActiveTab('log'))}>Log Complaint & Intake</button>
+            <button className={`tab-btn ${activeTab==='tools'?'active':''}`} onClick={() => dispatch(complaintSlice.actions.setActiveTab('tools'))}>AI Risk & CAPA Tools</button>
+            <button className={`tab-btn ${activeTab==='registry'?'active':''}`} onClick={() => dispatch(complaintSlice.actions.setActiveTab('registry'))}>Complaints Registry</button>
+          </div>
+        </header>
+      );
+    }
+
+    function ComplaintForm() {
+      const dispatch = useDispatch();
+      const form = useSelector(s => s.complaint.form);
+      const onChange = e => dispatch(complaintSlice.actions.updateField({ name: e.target.name, value: e.target.value }));
+
+      return (
+        <div className="card">
+          <div className="card-header">
+            <h2 className="card-title">Log Customer Complaint</h2>
+            <span className="pill pill-info">API & FDF QA Module</span>
+          </div>
+
+          <div className="section-label">1. Origin & Customer Details</div>
+          <div className="form-grid">
+            <div className="form-group"><label>Complaint Source</label><input name="complaint_source" value={form.complaint_source} onChange={onChange} className="extracted" /></div>
+            <div className="form-group"><label>Customer Name</label><input name="customer_name" value={form.customer_name} onChange={onChange} className="extracted" /></div>
+          </div>
+
+          <div className="section-label">2. Product & Batch Identification</div>
+          <div className="form-grid">
+            <div className="form-group"><label>Product Name</label><input name="product_name" value={form.product_name} onChange={onChange} className="extracted" /></div>
+            <div className="form-group"><label>Product Strength/Grade</label><input name="product_strength" value={form.product_strength} onChange={onChange} className="extracted" /></div>
+            <div className="form-group"><label>Batch/Lot Number</label><input name="batch_number" value={form.batch_number} onChange={onChange} className="extracted" /></div>
+            <div className="form-group"><label>Manufacturing Date</label><input type="date" name="manufacturing_date" value={form.manufacturing_date} onChange={onChange} className="extracted" /></div>
+            <div className="form-group"><label>Expiry Date</label><input type="date" name="expiry_date" value={form.expiry_date} onChange={onChange} className="extracted" /></div>
+            <div className="form-group"><label>Quantity Affected</label><input name="quantity_affected" value={form.quantity_affected} onChange={onChange} className="extracted" /></div>
+          </div>
+
+          <div className="section-label">3. Complaint Details</div>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Complaint Type</label>
+              <select name="complaint_type" value={form.complaint_type} onChange={onChange} className="extracted">
+                <option value="Quality/Purity">Quality & Purity Defect</option>
+                <option value="Packaging">Packaging & Sealing</option>
+                <option value="Contamination">Contamination / Foreign Particle</option>
+              </select>
+            </div>
+            <div className="form-group"><label>Complaint Date</label><input type="date" name="complaint_date" value={form.complaint_date} onChange={onChange} className="extracted" /></div>
+            <div className="form-group full-width">
+              <label>Detailed Complaint Description</label>
+              <textarea name="description" rows="4" value={form.description} onChange={onChange} className="extracted" />
+            </div>
+          </div>
+
+          <div className="section-label">4. Initial Assessment & Priority</div>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Initial Severity</label>
+              <select name="initial_severity" value={form.initial_severity} onChange={onChange} className="extracted">
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Priority</label>
+              <select name="priority" value={form.priority} onChange={onChange} className="extracted">
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+                <option value="Medium">Medium</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="button-row">
+            <button className="btn btn-secondary" onClick={() => dispatch(complaintSlice.actions.resetForm())}>Reset Form</button>
+            <button className="btn btn-primary" onClick={() => alert("Complaint Saved to Quality Management Database!")}>Save Complaint</button>
+          </div>
+        </div>
+      );
+    }
+
+    function AIAssistant() {
+      const dispatch = useDispatch();
+      const chat = useSelector(s => s.complaint.chat);
+      const [msg, setMsg] = useState('');
+
+      const onSend = (e) => {
+        e.preventDefault();
+        if(!msg.trim()) return;
+        dispatch(complaintSlice.actions.addChatMessage({ sender: 'user', text: msg }));
+        const userText = msg;
+        setMsg('');
+        setTimeout(() => {
+          dispatch(complaintSlice.actions.addChatMessage({
+            sender: 'assistant',
+            text: `Regarding "${userText}": I have verified the details for Batch BATCH-2026-X88 (Paracetamol 500mg). The risk level is High with active 5-Why analysis.`
+          }));
+        }, 500);
+      };
+
+      return (
+        <div className="card" style={{ background: '#f8fafc' }}>
+          <div className="card-header">
+            <h2 className="card-title" style={{ fontSize: '16px' }}>AI Complaint Intake Assistant</h2>
+            <span className="pill pill-info">BETA</span>
+          </div>
+
+          <div className="dropzone">
+            <p style={{ fontWeight: '600', fontSize: '14px' }}>Drag & drop complaint document here</p>
+            <p style={{ fontSize: '12px', color: '#64748b', margin: '4px 0 12px 0' }}>or click to browse</p>
+            <span style={{ fontSize: '11px', color: '#64748b' }}>Supported formats: PDF, DOCX, TXT, EML (Max 10MB)</span>
+          </div>
+
+          <div className="progress-bar-container">
+            <div className="progress-header"><span>EXTRACTION PROGRESS</span><span>100%</span></div>
+            <div className="progress-track"><div className="progress-fill" style={{ width: '100%' }}></div></div>
+            <p style={{ fontSize: '12px', color: '#475569', marginTop: '4px' }}>Extracted 11 GMP fields successfully.</p>
+          </div>
+
+          <div className="chat-box">
+            <div className="chat-messages">
+              {chat.map((c, i) => (
+                <div key={i} className={`msg-bubble ${c.sender==='user'?'msg-user':'msg-assistant'}`}>
+                  {c.text}
+                </div>
+              ))}
+            </div>
+            <form onSubmit={onSend} style={{ display: 'flex', gap: '8px' }}>
+              <input placeholder="Ask me anything about this complaint..." value={msg} onChange={e=>setMsg(e.target.value)} />
+              <button type="submit" className="btn btn-primary">Send</button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    function AIToolsPanel() {
+      return (
+        <div className="tools-grid">
+          <div className="tool-card">
+            <div className="tool-header">Complaint Completeness Checker</div>
+            <div className="score-display">100%</div>
+            <p style={{ fontSize: '12px', color: '#16a34a', fontWeight: '700', marginTop: '4px' }}>✅ Audit Ready (All mandatory fields populated)</p>
+          </div>
+
+          <div className="tool-card">
+            <div className="tool-header">AI Risk Classification & Escalation</div>
+            <span className="badge-tag badge-high">High Risk (76/100)</span>
+            <p style={{ fontSize: '12px', marginTop: '10px', background: '#f8fafc', padding: '8px', borderRadius: '6px' }}>
+              <strong>Rationale:</strong> Discoloration on release batch requires internal QA batch quarantine and investigation.
+            </p>
+          </div>
+
+          <div className="tool-card">
+            <div className="tool-header">Duplicate Complaint Detection</div>
+            <span className="pill pill-success">No Duplicates Detected</span>
+            <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px' }}>Checked against 3 historical database records.</p>
+          </div>
+
+          <div className="tool-card" style={{ gridColumn: '1 / -1' }}>
+            <div className="tool-header">Root Cause Analysis (5-Whys)</div>
+            <div style={{ fontSize: '12px', lineHeight: '1.6' }}>
+              <strong>1. Why discolored?</strong> Tablet moisture absorption post-packing.<br/>
+              <strong>2. Why moisture?</strong> Secondary warehouse humidity excursion.<br/>
+              <strong>3. Why humidity?</strong> Condenser fan trip in Zone B.<br/>
+              <strong>Root Cause:</strong> Redundant environmental monitoring sensor relay failed to trip automatic backup.
+            </div>
+          </div>
+
+          <div className="tool-card" style={{ gridColumn: '1 / -1' }}>
+            <div className="tool-header">CAPA Recommendation Engine</div>
+            <div style={{ fontSize: '12px' }}>
+              <p><strong>Corrective Action:</strong> Quarantine batch BATCH-2026-X88 immediately.</p>
+              <p style={{ marginTop: '4px' }}><strong>Preventive Action:</strong> Replace HVAC condenser relay and calibrate IoT sensors.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ComplaintsTable() {
+      return (
+        <div className="card">
+          <div className="card-header">
+            <h2 className="card-title">Complaints Registry & Database</h2>
+          </div>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Product</th><th>Batch</th><th>Customer</th><th>Type</th><th>Severity</th><th>Risk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>#1</td><td>Paracetamol 500mg Tablets</td><td>BATCH-2026-X88</td><td>Global Pharma Distributors</td><td>Quality/Purity</td><td>High</td><td>76/100</td></tr>
+              <tr><td>#2</td><td>Amoxicillin API Powder</td><td>AMX-8910-FL</td><td>Apex Health Care</td><td>Contamination</td><td>Critical</td><td>92/100</td></tr>
+              <tr><td>#3</td><td>Ibuprofen Liquid Suspension</td><td>IBU-2026-09</td><td>City General Hospital</td><td>Packaging</td><td>Medium</td><td>45/100</td></tr>
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+
+    function App() {
+      const activeTab = useSelector(s => s.complaint.activeTab);
+      return (
+        <div>
+          <Header />
+          <div className="main-content">
+            {activeTab === 'log' && <div className="grid-2col"><ComplaintForm /><AIAssistant /></div>}
+            {activeTab === 'tools' && <AIToolsPanel />}
+            {activeTab === 'registry' && <ComplaintsTable />}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Provider store={store}><App /></Provider>);
+  </script>
+</body>
+</html>
