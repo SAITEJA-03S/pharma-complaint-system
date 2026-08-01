@@ -1,0 +1,19 @@
+QUALITY ASSURANCE COMPLAINT INCIDENT REPORT
+Date: July 28, 2026
+Source: Global Pharma Distributors Inc.
+Customer Contact: Dr. Aris Thorne (Quality Manager)
+
+PRODUCT DETAILS:
+Product Name: Paracetamol 500mg Film-Coated Tablets
+Product Strength / Grade: 500mg USP Grade
+Batch Number: BATCH-2026-X88
+Manufacturing Date: 2026-02-15
+Expiry Date: 2028-02-15
+Quantity Affected: 2,500 blister packs (10 tablets/pack)
+
+INCIDENT DESCRIPTION:
+Upon receiving shipment at our central distribution hub in Hamburg, QA inspectors noted yellow-brownish discoloration on approximately 15% of the tablets in Batch BATCH-2026-X88. The aluminum blister foil seals appear intact, but the tablet surface shows signs of premature oxidation and mottling upon opening.
+
+INITIAL SEVERITY: High
+RECOMMENDED PRIORITY: High
+STATUS: Urgent QA Triage Requested

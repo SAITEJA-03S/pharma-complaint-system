@@ -1,0 +1,17 @@
+URGENT PHARMACEUTICAL DEFECT NOTIFICATION
+From: Apex Healthcare Manufacturing Plant 4
+To: AIVOA API QA Complaints Division
+Date: June 30, 2026
+
+Material: Amoxicillin Trihydrate API Raw Powder
+Grade: BP/USP Sterile Grade (99.8% purity)
+Lot/Batch Code: AMX-8910-FL
+Mfg Date: 2025-11-20
+Exp Date: 2027-11-20
+Quantity Affected: 120 kg (3 Drums)
+
+Defect Description:
+During receiving inspection and raw material HPLC testing at our formulation site, laboratory technicians observed visible black particulate specks floating in reconstituted solution samples. FTIR analysis suggests microscopic rubber gasket wear debris from synthesis reactor vessel.
+
+Severity Assessment: CRITICAL (Risk of Class I Recall if formulated)
+Action Requested: Immediate batch hold, root cause investigation, and replacement of affected drums.

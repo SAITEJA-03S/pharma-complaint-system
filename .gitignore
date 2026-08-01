@@ -1,0 +1,14 @@
+# Node / Frontend
+node_modules/
+dist/
+.env
+.env.local
+
+# Python / Backend
+__pycache__/
+*.pyc
+*.pyo
+*.db
+.pytest_cache/
+venv/
+.venv/
