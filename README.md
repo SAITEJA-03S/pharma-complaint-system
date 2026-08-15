@@ -3,6 +3,7 @@
 
 [![Stack](https://img.shields.io/badge/Stack-React_|_Redux_Toolkit_|_Vite_|_FastAPI-blue.svg)](#mandatory-technology-stack)
 [![AI Engine](https://img.shields.io/badge/AI-LangGraph_|_Groq_gemma2--9b--it_|_Edge_Fallback-orange.svg)](#ai-agent--langgraph-workflow)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-frontend--tau--lime--83.vercel.app-brightgreen.svg)](https://frontend-tau-lime-83.vercel.app)
 [![Deployment](https://img.shields.io/badge/Deployment-Vercel_|_Render_Ready-success.svg)](#-deployment--hosting)
 
 An end-to-end, high-tech AI-powered Quality Management System (QMS) Customer Complaint Processing & Intake Module engineered for pharmaceutical API and FDF manufacturing compliance. Built for the **AIVOA.AI AI Product Engineer** evaluation.
