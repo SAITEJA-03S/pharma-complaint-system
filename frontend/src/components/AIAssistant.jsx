@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
-  extractComplaintData, sendChatMessage, addUserChatMessage,
-  setExtractionProgress 
+  extractComplaintData, sendChatMessage, addUserChatMessage 
 } from '../store/complaintSlice';
 import { 
-  Upload, FileText, Send, Sparkles, AlertCircle, Bot, Zap, Clipboard
+  Upload, Sparkles, AlertCircle, Bot, Zap, Clipboard, Send, FileText 
 } from 'lucide-react';
 
 export default function AIAssistant() {
@@ -72,36 +71,41 @@ Exp Date: 2028-03-15
 Quantity: 450 bottles
 Complaint Type: Packaging
 Severity: Medium
-Description: Defective seals on bottle caps leading to leakage during transit. Heat sealer temperature drift suspected.`;
+Description: Defective heat seals on bottle caps leading to leakage during transit holding. Temperature drift on sealing station suspected.`;
     }
 
     dispatch(extractComplaintData({ text, apiKey }));
   };
 
   return (
-    <div className="card" style={{ background: '#f8fafc' }}>
+    <div className="card" style={{ background: 'var(--bg-card-glass)' }}>
       <div className="card-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Sparkles size={18} color="#2563eb" />
-          <h2 className="card-title" style={{ fontSize: '16px' }}>AI Complaint Intake Assistant</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ background: '#eff6ff', padding: '8px', borderRadius: '8px', color: '#2563eb' }}>
+            <Sparkles size={20} />
+          </div>
+          <div>
+            <h2 className="card-title" style={{ fontSize: '17px' }}>AI Document Intake Copilot</h2>
+            <p style={{ fontSize: '11px', color: '#64748b' }}>LangGraph Powered Automatic PDF/Text Parser</p>
+          </div>
         </div>
-        <span className="pill pill-info">BETA</span>
+        <span className="pill pill-info">LANGGRAPH v1.0</span>
       </div>
 
       {/* QUICK DEMO SAMPLER BAR */}
-      <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px', padding: '10px 14px', marginBottom: '16px' }}>
-        <div style={{ fontSize: '11px', fontWeight: '700', color: '#1e40af', display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '6px' }}>
-          <Zap size={13} />
-          QUICK DEMO SAMPLES (Click to Auto-Extract & Fill Form):
+      <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '10px', padding: '12px 14px', marginBottom: '18px' }}>
+        <div style={{ fontSize: '11px', fontWeight: '800', color: '#1e40af', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+          <Zap size={14} color="#2563eb" />
+          1-CLICK DEMO SCENARIO PRESETS (Auto-Extract & Fill Form):
         </div>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <button className="btn btn-secondary" style={{ fontSize: '11px', padding: '4px 8px' }} onClick={() => handleLoadSample('paracetamol')}>
+          <button className="btn btn-secondary" style={{ fontSize: '11.5px', padding: '5px 10px', background: 'white' }} onClick={() => handleLoadSample('paracetamol')}>
             💊 Paracetamol Discoloration
           </button>
-          <button className="btn btn-secondary" style={{ fontSize: '11px', padding: '4px 8px' }} onClick={() => handleLoadSample('amoxicillin')}>
+          <button className="btn btn-secondary" style={{ fontSize: '11.5px', padding: '5px 10px', background: 'white' }} onClick={() => handleLoadSample('amoxicillin')}>
             🧪 Amoxicillin API Contamination
           </button>
-          <button className="btn btn-secondary" style={{ fontSize: '11px', padding: '4px 8px' }} onClick={() => handleLoadSample('ibuprofen')}>
+          <button className="btn btn-secondary" style={{ fontSize: '11.5px', padding: '5px 10px', background: 'white' }} onClick={() => handleLoadSample('ibuprofen')}>
             📦 Ibuprofen Packaging Leak
           </button>
         </div>
@@ -119,13 +123,13 @@ Description: Defective seals on bottle caps leading to leakage during transit. H
             }
           }}
         >
-          <Upload size={32} color="#2563eb" style={{ marginBottom: '8px' }} />
-          <p style={{ fontWeight: '600', fontSize: '14px', color: '#1e293b' }}>
-            Drag & drop complaint document here
+          <Upload size={34} color="#2563eb" style={{ marginBottom: '8px' }} />
+          <p style={{ fontWeight: '700', fontSize: '14px', color: '#0f172a' }}>
+            Drag & drop customer complaint document here
           </p>
-          <p style={{ fontSize: '12px', color: '#64748b', margin: '4px 0 12px 0' }}>
-            or <label style={{ color: '#2563eb', cursor: 'pointer', textDecoration: 'underline' }}>
-              click to browse
+          <p style={{ fontSize: '12px', color: '#64748b', margin: '4px 0 14px 0' }}>
+            or <label style={{ color: '#2563eb', cursor: 'pointer', fontWeight: '600', textDecoration: 'underline' }}>
+              browse from computer
               <input 
                 type="file" 
                 accept=".pdf,.txt,.docx,.eml" 
@@ -135,40 +139,43 @@ Description: Defective seals on bottle caps leading to leakage during transit. H
             </label>
           </p>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center', margin: '12px 0' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center', margin: '14px 0' }}>
             <span style={{ height: '1px', background: '#cbd5e1', flex: 1 }}></span>
-            <span style={{ fontSize: '11px', fontWeight: '700', color: '#94a3b8' }}>OR</span>
+            <span style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8' }}>OR</span>
             <span style={{ height: '1px', background: '#cbd5e1', flex: 1 }}></span>
           </div>
 
-          <button className="btn btn-secondary" onClick={() => setPasteMode(true)} style={{ margin: '0 auto' }}>
+          <button className="btn btn-secondary" onClick={() => setPasteMode(true)} style={{ margin: '0 auto', fontSize: '12px' }}>
             <Clipboard size={14} />
-            Paste Complaint Text / Email
+            Paste Complaint Text / Raw Email
           </button>
 
-          <div style={{ marginTop: '14px', fontSize: '11px', color: '#64748b', background: '#f1f5f9', padding: '6px', borderRadius: '4px' }}>
+          <div style={{ marginTop: '16px', fontSize: '11px', color: '#64748b', background: '#f8fafc', padding: '8px', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
             <AlertCircle size={12} style={{ display: 'inline', marginRight: '4px' }} />
-            Supported formats: PDF, DOCX, TXT, EML (Max 10MB)
+            Supported formats: PDF, DOCX, TXT, EML (PyPDF2 & Groq / Heuristic NLP)
           </div>
         </div>
       ) : (
-        <div style={{ marginBottom: '16px', background: 'white', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <label style={{ fontWeight: '700', fontSize: '13px' }}>Paste Customer Complaint Text / Email:</label>
-            <button style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '12px' }} onClick={() => setPasteMode(false)}>
+        <div style={{ marginBottom: '18px', background: 'white', padding: '18px', border: '1px solid #e2e8f0', borderRadius: '10px', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center' }}>
+            <label style={{ fontWeight: '700', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <FileText size={15} color="#2563eb" />
+              Paste Customer Email / Incident Report:
+            </label>
+            <button style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '12px', fontWeight: '600' }} onClick={() => setPasteMode(false)}>
               Cancel
             </button>
           </div>
           <textarea 
-            rows={5}
-            placeholder="Paste raw email or complaint incident report text here..."
+            rows={6}
+            placeholder="Paste complaint incident report or email text here..."
             value={rawText}
             onChange={(e) => setRawText(e.target.value)}
           />
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
             <button className="btn btn-primary" onClick={handlePasteSubmit}>
               <Sparkles size={14} />
-              Extract & Populate Form
+              Extract & Auto-Fill Form
             </button>
           </div>
         </div>
@@ -184,24 +191,24 @@ Description: Defective seals on bottle caps leading to leakage during transit. H
           <div className="progress-track">
             <div className="progress-fill" style={{ width: `${extraction.progress}%` }}></div>
           </div>
-          <p style={{ fontSize: '12px', color: '#475569', marginTop: '4px', fontWeight: '500' }}>
+          <p style={{ fontSize: '12px', color: '#334155', marginTop: '6px', fontWeight: '600' }}>
             {extraction.statusText}
           </p>
         </div>
       )}
 
       {/* CHAT ASSISTANT */}
-      <div style={{ marginTop: '12px' }}>
-        <div style={{ fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>
-          AI ASSISTANT CHAT
+      <div style={{ marginTop: '16px' }}>
+        <div style={{ fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '8px', letterSpacing: '0.5px' }}>
+          INTERACTIVE AI ASSISTANT CHAT
         </div>
         <div className="chat-box">
           <div className="chat-messages">
             {chat.messages.map((m, idx) => (
               <div key={idx} className={`msg-bubble ${m.sender === 'user' ? 'msg-user' : 'msg-assistant'}`}>
                 {m.sender === 'assistant' && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#2563eb', fontWeight: '700', marginBottom: '2px' }}>
-                    <Bot size={12} /> AI ASSISTANT
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10.5px', color: '#2563eb', fontWeight: '800', marginBottom: '4px' }}>
+                    <Bot size={13} /> QA COPILOT
                   </div>
                 )}
                 {m.text}
@@ -209,7 +216,7 @@ Description: Defective seals on bottle caps leading to leakage during transit. H
             ))}
             {chat.isTyping && (
               <div className="msg-bubble msg-assistant" style={{ fontStyle: 'italic', color: '#64748b' }}>
-                AI Assistant is processing...
+                Copilot is processing answer...
               </div>
             )}
           </div>
@@ -217,17 +224,14 @@ Description: Defective seals on bottle caps leading to leakage during transit. H
           <form onSubmit={handleSendChat} className="chat-input-row">
             <input 
               type="text" 
-              placeholder="Ask me anything about this complaint..."
+              placeholder="Ask Copilot about root cause, CAPA, or batch details..."
               value={userMsg}
               onChange={(e) => setUserMsg(e.target.value)}
             />
-            <button type="submit" className="btn btn-primary" style={{ padding: '8px 12px' }}>
-              <Send size={14} />
+            <button type="submit" className="btn btn-primary" style={{ padding: '9px 14px' }}>
+              <Send size={15} />
             </button>
           </form>
-        </div>
-        <div style={{ textAlign: 'center', fontSize: '11px', color: '#94a3b8', marginTop: '6px' }}>
-          AI responses may contain errors. Please verify information in QA system.
         </div>
       </div>
     </div>

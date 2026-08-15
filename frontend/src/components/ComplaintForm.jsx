@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateFormField, resetForm, saveComplaintToDb, setActiveTab } from '../store/complaintSlice';
-import { RotateCcw, Save, CheckCircle } from 'lucide-react';
+import { RotateCcw, Save, Printer, User, Package, FileWarning, ShieldCheck } from 'lucide-react';
 
 export default function ComplaintForm() {
   const dispatch = useDispatch();
@@ -36,25 +36,41 @@ export default function ComplaintForm() {
     dispatch(setActiveTab('registry'));
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   const isExtracted = (key) => extractedKeys.includes(key);
 
   return (
     <div className="card">
       <div className="card-header">
-        <h2 className="card-title">Log Customer Complaint</h2>
-        <span className="pill pill-info">API & FDF QA Module</span>
+        <div>
+          <h2 className="card-title">Log Customer Complaint</h2>
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
+            API & FDF Quality Assurance Standard Complaint Entry Form
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button type="button" className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '12px' }} onClick={handlePrint}>
+            <Printer size={14} /> Print Audit Record
+          </button>
+        </div>
       </div>
 
       <form onSubmit={handleSave}>
         {/* SECTION 1 */}
-        <div className="section-label">1. Origin & Customer Details</div>
+        <div className="section-label">
+          <User size={14} color="#2563eb" />
+          1. Origin & Customer Details
+        </div>
         <div className="form-grid">
           <div className="form-group">
             <label>Complaint Source</label>
             <input 
               type="text"
               name="complaint_source"
-              placeholder="e.g. Customer Email, Quality Portal"
+              placeholder="e.g. Customer Email, Quality Portal, Field Report"
               value={form.complaint_source}
               onChange={handleChange}
               className={isExtracted('complaint_source') ? 'extracted' : ''}
@@ -65,7 +81,7 @@ export default function ComplaintForm() {
             <input 
               type="text"
               name="customer_name"
-              placeholder="e.g. Global Pharma Distributors"
+              placeholder="e.g. Global Pharma Distributors Inc."
               value={form.customer_name}
               onChange={handleChange}
               className={isExtracted('customer_name') ? 'extracted' : ''}
@@ -74,10 +90,13 @@ export default function ComplaintForm() {
         </div>
 
         {/* SECTION 2 */}
-        <div className="section-label">2. Product & Batch Identification</div>
+        <div className="section-label">
+          <Package size={14} color="#2563eb" />
+          2. Product & Batch Identification
+        </div>
         <div className="form-grid">
           <div className="form-group">
-            <label>Product Name</label>
+            <label>Product Name (API / FDF)</label>
             <input 
               type="text"
               name="product_name"
@@ -143,7 +162,10 @@ export default function ComplaintForm() {
         </div>
 
         {/* SECTION 3 */}
-        <div className="section-label">3. Complaint Details</div>
+        <div className="section-label">
+          <FileWarning size={14} color="#2563eb" />
+          3. Complaint Details & Defect Description
+        </div>
         <div className="form-grid">
           <div className="form-group">
             <label>Complaint Type</label>
@@ -153,12 +175,12 @@ export default function ComplaintForm() {
               onChange={handleChange}
               className={isExtracted('complaint_type') ? 'extracted' : ''}
             >
-              <option value="">-- Select Type --</option>
-              <option value="Packaging">Packaging & Sealing</option>
+              <option value="">-- Select Category --</option>
+              <option value="Packaging">Packaging & Sealing Defect</option>
               <option value="Quality/Purity">Quality & Purity Defect</option>
               <option value="Contamination">Contamination / Foreign Particle</option>
               <option value="Labeling">Labeling / Misbranding</option>
-              <option value="Efficacy">Therapeutic Efficacy</option>
+              <option value="Efficacy">Therapeutic Efficacy Issue</option>
             </select>
           </div>
           <div className="form-group">
@@ -185,7 +207,10 @@ export default function ComplaintForm() {
         </div>
 
         {/* SECTION 4 */}
-        <div className="section-label">4. Initial Assessment & Priority</div>
+        <div className="section-label">
+          <ShieldCheck size={14} color="#2563eb" />
+          4. Initial Assessment & Priority Triage
+        </div>
         <div className="form-grid">
           <div className="form-group">
             <label>Initial Severity</label>
@@ -224,7 +249,7 @@ export default function ComplaintForm() {
           </button>
           <button type="submit" className="btn btn-primary">
             <Save size={15} />
-            Save Complaint
+            Save Complaint to DB
           </button>
         </div>
       </form>

@@ -1,0 +1,40 @@
+name: CI Build & Audit Check
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies & build frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+
+  verify-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install backend dependencies & test imports
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          python -c "import main, agent, database, models; print('Backend modules loaded!')"

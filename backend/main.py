@@ -32,6 +32,15 @@ app.add_middleware(
 def startup_event():
     init_db()
 
+@app.get("/")
+def root():
+    return {
+        "status": "online",
+        "service": "AIVOA.AI Pharma Customer Complaint Management System API",
+        "documentation": "/docs",
+        "health": "/api/health"
+    }
+
 @app.get("/api/health")
 def health_check():
     return {

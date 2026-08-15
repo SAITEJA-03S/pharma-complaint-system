@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Header from './components/Header';
 import ComplaintForm from './components/ComplaintForm';
 import AIAssistant from './components/AIAssistant';
+import AnalyticsDashboard from './components/AnalyticsDashboard';
 import AIToolsPanel from './components/AIToolsPanel';
 import ComplaintsTable from './components/ComplaintsTable';
 
@@ -19,6 +20,10 @@ export default function App() {
             <ComplaintForm />
             <AIAssistant />
           </div>
+        )}
+
+        {activeTab === 'analytics' && (
+          <AnalyticsDashboard />
         )}
 
         {activeTab === 'tools' && (
