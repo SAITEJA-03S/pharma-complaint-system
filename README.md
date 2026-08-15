@@ -69,16 +69,7 @@ npm run dev
 ```
 *Frontend UI will run at `http://localhost:3000`.*
 
----
 
-## 🎥 Demo Video Guide (5-10 Minutes Submission Outline)
-
-1. **Introduction**: Overview of the QMS Customer Complaint System for API & FDF pharmaceutical manufacturing.
-2. **Document Intake**: Drag-and-drop a complaint PDF or click a 1-click demo sample (e.g. *Paracetamol Discoloration*).
-3. **LangGraph Agent Pipeline**: Demonstrate text parsing, node execution, field extraction, and auto-population into the Redux store.
-4. **Interactive Chat Assistant**: Ask questions like *"What is the batch number and root cause?"* in the chat box.
-5. **AI Copilot & Risk Suite**: Showcase Completeness Score, 5-Why Root Cause tree, CAPA recommendations, and Duplicate detection against SQLite.
-6. **Complaints Registry**: Save the complaint into the database, view in the registry table, and export CSV report.
 
 ---
 
